@@ -60,7 +60,7 @@ export default function Signup() {
         } catch (e) {
             onError(e);
             setIsLoading(false);
-        }
+        } 
     }
 
 

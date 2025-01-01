@@ -13,7 +13,7 @@ export default function LoaderButton({
         <Button
             disabled={disabled || isLoading}
             className={`LoaderButton ${className}`}
-            block={!!block} // Ensure block is always a boolean
+            block={block.toString()} // Ensure block is always a boolean
             {...props}
         >
             {isLoading && <BsArrowRepeat className="spinning" />}

@@ -5,20 +5,20 @@ import { API } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import config from "../config";
-
+import { s3Upload } from "../libs/awsLib";
 import "./NewNote.css";
 
 // Function to convert a file to base64
-function encodeFileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            resolve(reader.result.split(",")[1]); // Extract base64 part from result
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
+// function encodeFileToBase64(file) {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+//         reader.onloadend = () => {
+//             resolve(reader.result.split(",")[1]); // Extract base64 part from result
+//         };
+//         reader.onerror = reject;
+//         reader.readAsDataURL(file);
+//     });
+// }
 
 export default function NewNote() {
     const file = useRef(null);
@@ -49,28 +49,20 @@ export default function NewNote() {
         setIsLoading(true);
 
         try {
-            // If a file is selected, encode it to base64
-            const attachment = file.current ? await encodeFileToBase64(file.current) : null;
+            // Upload file to S3 if it exists
+            const attachment = file.current
+            ? await s3Upload(file.current)
+            : null;
 
-            // Create note with base64-encoded file (if attached)
-            const note = {
-                content,
-                attachment: attachment
-                    ? {
-                        name: file.current.name,
-                        content: attachment, // base64-encoded content
-                        contentType: file.current.type,
-                    }
-                    : null,
-            };
+        // Create note with the attachment key
+        await createNote({ content, attachment });
 
-            // Send the note to the API
-            await createNote(note);
-            history.push("/"); // Redirect to the home page
-        } catch (e) {
-            onError(e);
-            setIsLoading(false);
-        }
+        history.push("/");
+           history.push("/"); // Redirect to the home page
+       } catch (e) {
+           onError(e);
+           setIsLoading(false);
+       }
     }
 
     function createNote(note) {

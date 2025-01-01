@@ -3,6 +3,10 @@
     padding-bottom: 5px;
 }
 
+.body{
+    background-image: url(backgroung.jpg);
+}
+
 .forgetPassword:hover {
     cursor: pointer;
 }

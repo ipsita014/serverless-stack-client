@@ -42,7 +42,7 @@ function App() {
         <Navbar collapseOnSelect bg="light" expand="md">
           <LinkContainer to="/">
             <Navbar.Brand className="font-weight-bold text-muted">
-              Scratch
+              Notesy
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle />

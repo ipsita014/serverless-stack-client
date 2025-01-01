@@ -24,6 +24,8 @@ export default function Notes() {
             try {
                 const note = await loadNote();
                 const { content, attachment } = note;
+                console.log("note.attachment:", attachment); // Debugging here
+                note.attachment = attachment || ""; // Ensures attachment is at least an empty string
                 if (attachment) {
                     note.attachmentURL = await Storage.vault.get(attachment);
                 }
@@ -41,6 +43,10 @@ export default function Notes() {
     }
 
     function formatFilename(str) {
+        if (typeof str !== "string") {
+            console.error("Invalid filename:", str); // Logs if the type is incorrect
+            return ""; // Returns a default empty string to prevent crashes
+        }
         return str.replace(/^\w+-/, "");
     }
 
@@ -67,6 +73,7 @@ export default function Notes() {
         try {
             if (file.current) {
                 attachment = await s3Upload(file.current);
+                console.log("Uploaded attachment(S3 key):", attachment);
             }
             await saveNote({
                 content,
