@@ -1,17 +1,102 @@
-@media all and (min-width: 480px) {
-    .Signup {
-        padding: 60px 0;
-    }
+/* General Styles */
+body {
+    font-family: 'Ubuntu', Arial, sans-serif;
+    background-color: #f1f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(135deg, #6c757d, #4a4e69);
+    background-size: cover;
+}
 
-    .Signup form {
-        margin: 0 auto;
-        max-width: 320px;
+/* Main Container for Signup Form */
+.Signup {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-container {
+    background-color: #ffffff;
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Heading */
+h2 {
+    font-size: 28px;
+    font-family: "Open Sans", sans-serif;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Input Fields */
+.input-field {
+    border-radius: 30px;
+    font-size: 16px;
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #6c757d;
+    outline: none;
+    box-shadow: 0 0 5px rgba(108, 117, 125, 0.7);
+}
+
+/* Submit Button Styles */
+.submit-btn {
+    background-color: #6c757d;
+    border-radius: 30px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #5a6268;
+}
+
+/* Animation for Form Appearance */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
     }
-    .Signup h2{
-        padding-bottom: 25px;
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-.body{
-    background-image: url(backgroung.jpg);
+/* Responsive Styles */
+@media (max-width: 480px) {
+    .card-container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .input-field {
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
 }

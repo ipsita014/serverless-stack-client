@@ -8,7 +8,10 @@ import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Pagination from "react-bootstrap/Pagination"; // Importing pagination
 import "./Home.css";
+
+const NOTES_PER_PAGE = 5;
 
 export default function Home() {
     const [notes, setNotes] = useState([]);
@@ -17,6 +20,7 @@ export default function Home() {
     const [greet, setGreet] = useState();
     const { isAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         async function onLoad() {
@@ -38,6 +42,10 @@ export default function Home() {
         onLoad();
     }, [isAuthenticated]);
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [filteredNotes]);
+
     async function loadNotes() {
         return await API.get("notes", "/notes");
     }
@@ -46,14 +54,21 @@ export default function Home() {
         const term = event.target.value.toLowerCase();
         setSearchTerm(term);
         setFilteredNotes(
-            notes.filter((note) =>
-                note.content.toLowerCase().includes(term) ||
-                (note.attachment && note.attachment.toLowerCase().includes(term))
+            notes.filter(
+                (note) =>
+                    note.content.toLowerCase().includes(term) ||
+                    (note.attachment && note.attachment.toLowerCase().includes(term))
             )
         );
     }
 
-    // const BASE_URL = "https://notes-api-uploads.s3.us-east-1.amazonaws.com";
+    function handlePageChange(pageNumber) {
+        setCurrentPage(pageNumber);
+    }
+
+    const indexOfLastNote = currentPage * NOTES_PER_PAGE;
+    const indexOfFirstNote = indexOfLastNote - NOTES_PER_PAGE;
+    const currentNotes = filteredNotes.slice(indexOfFirstNote, indexOfLastNote);
 
     function renderNotesList(notes) {
         return (
@@ -64,37 +79,40 @@ export default function Home() {
                         <span className="ml-2 font-weight-bold">Create a new note</span>
                     </ListGroup.Item>
                 </LinkContainer>
-                {notes.map(({ noteId, content, createdAt, attachment }) => {
-                    // const imageUrl = attachment ? `${BASE_URL}/${attachment}` : null;
-
-                    return (
-                        <LinkContainer key={noteId} to={`/notes/${noteId}`}>
-                            <ListGroup.Item action className="d-flex align-items-center">
-                                {/* {imageUrl && (
-                                    <img
-                                        src={imageUrl}
-                                        alt={`Note ${content.trim().split("\n")[0] || "Image"}`}
-                                        className="note-image"
-                                        onError={(e) =>
-                                            (e.target.src = "/default-image.png")
-                                        }
-                                    />
-                                )} */}
-                                <div>
-                                    <span className="font-weight-bold">
-                                        {content.trim().split("\n")[0]}
-                                    </span>
-                                    <br />
-                                    <span className="text-muted">
-                                        Created: {new Date(createdAt).toLocaleString()}
-                                    </span>
-                                </div>
-                            </ListGroup.Item>
-                        </LinkContainer>
-                    );
-                })}
+                {notes.map(({ noteId, content, createdAt, attachment }) => (
+                    <LinkContainer key={noteId} to={`/notes/${noteId}`}>
+                        <ListGroup.Item action className="d-flex align-items-center">
+                            <div>
+                                <span className="font-weight-bold">
+                                    {content.trim().split("\n")[0]}
+                                </span>
+                                <br />
+                                <span className="text-muted">
+                                    Created: {new Date(createdAt).toLocaleString()}
+                                </span>
+                            </div>
+                        </ListGroup.Item>
+                    </LinkContainer>
+                ))}
             </>
         );
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(filteredNotes.length / NOTES_PER_PAGE);
+        const paginationItems = [];
+        for (let number = 1; number <= totalPages; number++) {
+            paginationItems.push(
+                <Pagination.Item
+                    key={number}
+                    active={number === currentPage}
+                    onClick={() => handlePageChange(number)}
+                >
+                    {number}
+                </Pagination.Item>
+            );
+        }
+        return <Pagination>{paginationItems}</Pagination>;
     }
 
     function renderLander() {
@@ -130,7 +148,10 @@ export default function Home() {
                     />
                 </Form>
                 {!isLoading ? (
-                    <ListGroup>{renderNotesList(filteredNotes)}</ListGroup>
+                    <>
+                        <ListGroup>{renderNotesList(currentNotes)}</ListGroup>
+                        {renderPagination()}
+                    </>
                 ) : (
                     <p>Loading notes...</p>
                 )}
@@ -138,9 +159,5 @@ export default function Home() {
         );
     }
 
-    return (
-        <div className="Home">
-            {isAuthenticated ? renderNotes() : renderLander()}
-        </div>
-    );
+    return <div className="Home">{isAuthenticated ? renderNotes() : renderLander()}</div>;
 }

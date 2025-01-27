@@ -1,3 +1,59 @@
-.App {
-}
-
+/* Navbar Customization */
+.navbar-custom {
+    background: linear-gradient(to right, #6a11cb, #2575fc);  /* Purple-blue gradient */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+    border-radius: 10px;  /* Smooth rounded corners */
+    padding: 15px 30px;  /* Generous padding */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .navbar-custom .navbar-toggler-icon {
+    background-color: #fff;  /* White icon for visibility */
+  }
+  
+  /* Branding Style */
+  .navbar-custom .navbar-brand {
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;
+    color: white !important;  /* White brand text */
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-custom .navbar-brand:hover {
+    color: #f1f1f1 !important;  /* Lighter color on hover */
+  }
+  
+  /* Navbar Links */
+  .navbar-custom .nav-link {
+    font-size: 1.1rem;
+    color: white !important;  /* White links */
+    font-weight: 500;
+    margin-left: 20px;
+    padding: 10px 15px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Hover effects for Navbar Links */
+  .navbar-custom .nav-link:hover {
+    color: #f1f1f1 !important;  /* Lighter grey color */
+    transform: scale(1.05);  /* Slight scale effect */
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 767px) {
+    .navbar-custom {
+      padding: 15px 20px;  /* Adjust padding for smaller screens */
+    }
+  
+    .navbar-custom .navbar-brand {
+      font-size: 1.7rem;  /* Slightly smaller brand text */
+    }
+  
+    .navbar-custom .nav-link {
+      font-size: 1.2rem;  /* Larger font size for mobile */
+      margin-left: 15px;
+    }
+  }
+  

@@ -6,12 +6,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Ubuntu", Arial, sans-serif;
-    background-image: url(backgroung.jpg);
-    align-items: center;
+    background-color: #f4f7f6;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-
 }
 
 .Home .lander {
@@ -46,6 +44,8 @@ body {
     margin-bottom: 20px;
     font-family: "Ubuntu", sans-serif;
     font-size: 16px;
+    border-radius: 20px;
+    padding-left: 20px;
 }
 
 .Home .notes .list-group-item {
@@ -55,20 +55,12 @@ body {
     border-radius: 8px;
     margin-bottom: 10px;
     transition: background-color 0.3s ease;
+    background-color: #ffffff;
 }
 
 .Home .notes .list-group-item:hover {
-    background-color: #f1f3f5;
+    background-color: #e9ecef;
 }
-
-.note-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-right: 12px;
-}
-
 
 .Home .notes .font-weight-bold {
     font-family: "Ubuntu", sans-serif;
@@ -81,8 +73,17 @@ body {
     color: #6c757d;
 }
 
-/* Utility for consistent form styling */
-.notes .form-control {
-    margin-bottom: 20px;
-    font-size: 16px;
+.Home .notes .pagination {
+    justify-content: center;
+    margin-top: 20px;
 }
+
+.Home .notes .pagination-item {
+    border-radius: 50%;
+}
+
+/* Button Styles */
+button {
+    border-radius: 20px;
+}
+

@@ -5,9 +5,8 @@ import { Auth } from "aws-amplify";
 import { onError } from "./libs/errorLib";
 import { useHistory } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
-import Routes from "./Routes";
 import Nav from "react-bootstrap/Nav";
-
+import Routes from "./Routes";
 import "./App.css";
 
 function App() {
@@ -24,6 +23,7 @@ function App() {
   useEffect(() => {
     onLoad();
   }, []);
+
   async function onLoad() {
     try {
       await Auth.currentSession();
@@ -39,27 +39,24 @@ function App() {
   return (
     !isAuthenticating && (
       <div className="App container py-3">
-        <Navbar collapseOnSelect bg="light" expand="md">
+        <Navbar collapseOnSelect expand="md" className="navbar-custom">
           <LinkContainer to="/">
-            <Navbar.Brand className="font-weight-bold text-muted">
-              Notesy
-            </Navbar.Brand>
+            <Navbar.Brand className="navbar-brand">Notesy</Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
+          <Navbar.Toggle aria-controls="navbar-nav" />
+          <Navbar.Collapse id="navbar-nav" className="justify-content-end">
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
                 <>
-                 
-                  <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                  <Nav.Link onClick={handleLogout} className="nav-link">Logout</Nav.Link>
                 </>
               ) : (
                 <>
                   <LinkContainer to="/signup">
-                    <Nav.Link>Signup</Nav.Link>
+                    <Nav.Link className="nav-link">Signup</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/login">
-                    <Nav.Link>Login</Nav.Link>
+                    <Nav.Link className="nav-link">Login</Nav.Link>
                   </LinkContainer>
                 </>
               )}

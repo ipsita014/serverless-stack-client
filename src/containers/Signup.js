@@ -7,8 +7,8 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
 import "./Signup.css";
-export default function Signup() {
 
+export default function Signup() {
     const [fields, handleFieldChange] = useFormFields({
         email: "",
         password: "",
@@ -63,8 +63,6 @@ export default function Signup() {
         } 
     }
 
-
-
     function renderConfirmationForm() {
         return (
             <Form onSubmit={handleConfirmationSubmit}>
@@ -75,6 +73,7 @@ export default function Signup() {
                         type="tel"
                         onChange={handleFieldChange}
                         value={fields.confirmationCode}
+                        className="input-field"
                     />
                     <Form.Text muted>Please check your email for the code.</Form.Text>
                 </Form.Group>
@@ -85,12 +84,14 @@ export default function Signup() {
                     variant="success"
                     isLoading={isLoading}
                     disabled={!validateConfirmationForm()}
+                    className="submit-btn"
                 >
                     Verify
                 </LoaderButton>
             </Form>
         );
     }
+
     function renderForm() {
         return (
             <Form onSubmit={handleSubmit}>
@@ -101,6 +102,7 @@ export default function Signup() {
                         type="email"
                         value={fields.email}
                         onChange={handleFieldChange}
+                        className="input-field"
                     />
                 </Form.Group>
                 <Form.Group controlId="password" size="lg">
@@ -109,6 +111,7 @@ export default function Signup() {
                         type="password"
                         value={fields.password}
                         onChange={handleFieldChange}
+                        className="input-field"
                     />
                 </Form.Group>
                 <Form.Group controlId="confirmPassword" size="lg">
@@ -117,6 +120,7 @@ export default function Signup() {
                         type="password"
                         onChange={handleFieldChange}
                         value={fields.confirmPassword}
+                        className="input-field"
                     />
                 </Form.Group>
                 <LoaderButton
@@ -126,15 +130,19 @@ export default function Signup() {
                     variant="success"
                     isLoading={isLoading}
                     disabled={!validateForm()}
+                    className="submit-btn"
                 >
                     Signup
                 </LoaderButton>
             </Form>
         );
     }
+
     return (
         <div className="Signup">
-            {newUser === null ? renderForm() : renderConfirmationForm()}
+            <div className="card-container">
+                {newUser === null ? renderForm() : renderConfirmationForm()}
+            </div>
         </div>
     );
 }

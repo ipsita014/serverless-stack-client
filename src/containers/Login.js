@@ -25,7 +25,7 @@ export default function Login() {
         setIsLoading(true);
         try {
             await Auth.signIn(fields.email, fields.password);
-            userHasAuthenticated(true)
+            userHasAuthenticated(true);
             history.push("/");
         } catch (e) {
             onError(e);
@@ -34,41 +34,48 @@ export default function Login() {
     }
     return (
         <div className="Login">
-            <h2 className="text-center">Login</h2>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group size="lg" controlId="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="email"
-                        value={fields.email}
-                        onChange={handleFieldChange}
-                    />
-                </Form.Group>
-                
-                <Form.Group size="lg" controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        value={fields.password}
-                        onChange={handleFieldChange}
-                    />
-                </Form.Group>
-                <LinkContainer to="/forget">
-                    <h6 className="forgetPassword">
-                        <span>Forget Password?</span>
-                    </h6>
-                </LinkContainer>
-                <LoaderButton
-                    block
-                    size="lg"
-                    type="submit"
-                    isLoading={isLoading}
-                    disabled={!validateForm()}
-                >
-                    Login
-                </LoaderButton>
-            </Form>
+            <div className="login-container">
+                <h2 className="text-center">Login</h2>
+                <Form onSubmit={handleSubmit} className="login-form">
+                    <Form.Group size="lg" controlId="email">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            autoFocus
+                            type="email"
+                            value={fields.email}
+                            onChange={handleFieldChange}
+                            className="input-field"
+                        />
+                    </Form.Group>
+                    
+                    <Form.Group size="lg" controlId="password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            value={fields.password}
+                            onChange={handleFieldChange}
+                            className="input-field"
+                        />
+                    </Form.Group>
+                    
+                    <LinkContainer to="/forget">
+                        <h6 className="forgetPassword">
+                            <span>Forget Password?</span>
+                        </h6>
+                    </LinkContainer>
+                    
+                    <LoaderButton
+                        block
+                        size="lg"
+                        type="submit"
+                        isLoading={isLoading}
+                        disabled={!validateForm()}
+                        className="submit-btn"
+                    >
+                        Login
+                    </LoaderButton>
+                </Form>
+            </div>
         </div>
     );
 }
