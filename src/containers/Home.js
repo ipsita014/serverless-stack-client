@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
 import { Auth } from "aws-amplify";
@@ -8,7 +7,8 @@ import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Pagination from "react-bootstrap/Pagination"; // Importing pagination
+import Pagination from "react-bootstrap/Pagination";
+import Card from "react-bootstrap/Card"; // Importing Card
 import "./Home.css";
 
 const NOTES_PER_PAGE = 5;
@@ -74,24 +74,28 @@ export default function Home() {
         return (
             <>
                 <LinkContainer to="/notes/new">
-                    <ListGroup.Item action className="py-3 text-nowrap text-truncate">
-                        <BsPencilSquare size={17} />
-                        <span className="ml-2 font-weight-bold">Create a new note</span>
-                    </ListGroup.Item>
+                    <Card className="create-note-card">
+                        <Card.Body className="text-center">
+                            <BsPencilSquare size={17} />
+                            <span className="ml-2 font-weight-bold">Create a new note</span>
+                        </Card.Body>
+                    </Card>
                 </LinkContainer>
                 {notes.map(({ noteId, content, createdAt, attachment }) => (
                     <LinkContainer key={noteId} to={`/notes/${noteId}`}>
-                        <ListGroup.Item action className="d-flex align-items-center">
-                            <div>
-                                <span className="font-weight-bold">
-                                    {content.trim().split("\n")[0]}
-                                </span>
-                                <br />
-                                <span className="text-muted">
-                                    Created: {new Date(createdAt).toLocaleString()}
-                                </span>
-                            </div>
-                        </ListGroup.Item>
+                        <Card className="note-card mb-3">
+                            <Card.Body>
+                                <div>
+                                    <span className="font-weight-bold">
+                                        {content.trim().split("\n")[0]}
+                                    </span>
+                                    <br />
+                                    <span className="text-muted">
+                                        Created: {new Date(createdAt).toLocaleString()}
+                                    </span>
+                                </div>
+                            </Card.Body>
+                        </Card>
                     </LinkContainer>
                 ))}
             </>
@@ -149,7 +153,9 @@ export default function Home() {
                 </Form>
                 {!isLoading ? (
                     <>
-                        <ListGroup>{renderNotesList(currentNotes)}</ListGroup>
+                        <div className="note-cards-list">
+                            {renderNotesList(currentNotes)}
+                        </div>
                         {renderPagination()}
                     </>
                 ) : (
