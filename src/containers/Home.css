@@ -1,89 +1,260 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
-    font-family: "Ubuntu", Arial, sans-serif;
-    background-color: #f4f7f6;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* Lander Section */
 .Home .lander {
-    padding: 80px 0;
+    padding: 80px 30px;
     text-align: center;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    margin: 40px auto;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .Home .lander h1 {
-    font-family: "Open Sans", sans-serif;
     font-weight: 600;
+    font-size: 2.8rem;
+    color: #2c3e50;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-.Home h2 {
-    margin: 20px 0;
+.Home .lander p {
+    font-size: 1.2rem;
+    color: #34495e;
 }
 
-.Home h2 span {
-    font-family: "Ubuntu", sans-serif;
-    font-size: 25px;
-    color: gray;
-}
-
+/* Buttons */
 .box {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
     margin-top: 30px;
 }
 
+.box button {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    border: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    background: linear-gradient(135deg, #3498db, #6dd5fa);
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.box button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Notes Section */
 .Home .notes {
-    margin-top: 20px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
 }
 
+.Home h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+}
+
+.Home h2 span {
+    color: #3498db;
+    font-weight: 600;
+}
+
+/* Search Bar */
 .Home .notes .form-control {
-    margin-bottom: 20px;
-    font-family: "Ubuntu", sans-serif;
-    font-size: 16px;
-    border-radius: 20px;
-    padding-left: 20px;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    border-radius: 25px;
+    padding: 12px 20px;
+    border: none;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
 }
 
-.Home .note-cards-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px;
+.Home .notes .form-control:focus {
+    box-shadow: 0 5px 15px rgba(52,152,219,0.2);
+    outline: none;
 }
 
-.Home .note-cards-list .note-card,
-.Home .create-note-card {
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    transition: transform 0.3s ease;
-}
-
-.Home .note-cards-list .note-card:hover,
-.Home .create-note-card:hover {
-    transform: translateY(-5px);
-}
-
-.Home .notes .font-weight-bold {
-    font-family: "Ubuntu", sans-serif;
-    font-size: 18px;
-    color: #333;
-}
-
-.Home .notes .text-muted {
-    font-size: 14px;
-    color: #6c757d;
-}
-
-.Home .notes .pagination {
+/* Notes Grid (Using Flexbox) */
+.notes-grid {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
+    gap: 20px;
+    padding: 20px;
 }
 
-/* Button Styles */
-button {
-    border-radius: 20px;
+/* Note Cards */
+.note-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 280px;
+    height: auto;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.05);
 }
+
+.note-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Image inside Note Card */
+.note-image {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Note Content */
+.note-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.note-content .font-weight-bold {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    display: block;
+}
+
+.card-body {
+    padding: 15px 20px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+/* Create New Card */
+.create-new-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+    border: 2px dashed #4dd0e1;
+    transition: all 0.3s ease;
+}
+
+.create-new-card:hover {
+    background: linear-gradient(135deg, #b2ebf2 0%, #80deea 100%);
+}
+
+.create-new-card svg {
+    color: #00acc1;
+    margin-bottom: 15px;
+}
+
+.create-new-card h5 {
+    color: #00838f;
+    font-weight: 500;
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 50%;
+    margin: 0 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: white;
+    color: #2c3e50;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #3498db;
+    color: white;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #e8f4f8;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .Home .lander {
+        padding: 60px 20px;
+    }
+    
+    .Home .lander h1 {
+        font-size: 2.5rem;
+    }
+
+    .notes-grid {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .Home .lander h1 {
+        font-size: 2.2rem;
+    }
+    
+    .box {
+        flex-direction: column;
+    }
+    
+    .Home .notes {
+        padding: 15px;
+    }
+
+    .notes-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .note-card {
+        width: 90%;
+    }
+}
+

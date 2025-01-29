@@ -8,7 +8,7 @@ import { API } from "aws-amplify";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
-import Card from "react-bootstrap/Card"; // Importing Card
+// import Card from "react-bootstrap/Card";
 import "./Home.css";
 
 const NOTES_PER_PAGE = 5;
@@ -22,11 +22,13 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
 
+    const BASE_URL = "https://note-app-uploads-ipsita.s3.us-east-1.amazonaws.com";
+
     useEffect(() => {
         async function onLoad() {
             if (!isAuthenticated) {
                 return;
-            }
+            } 
             try {
                 const notes = await loadNotes();
                 const user = await Auth.currentAuthenticatedUser();
@@ -73,34 +75,61 @@ export default function Home() {
     function renderNotesList(notes) {
         return (
             <>
-                <LinkContainer to="/notes/new">
-                    <Card className="create-note-card">
-                        <Card.Body className="text-center">
-                            <BsPencilSquare size={17} />
-                            <span className="ml-2 font-weight-bold">Create a new note</span>
-                        </Card.Body>
-                    </Card>
-                </LinkContainer>
-                {notes.map(({ noteId, content, createdAt, attachment }) => (
-                    <LinkContainer key={noteId} to={`/notes/${noteId}`}>
-                        <Card className="note-card mb-3">
-                            <Card.Body>
-                                <div>
-                                    <span className="font-weight-bold">
-                                        {content.trim().split("\n")[0]}
-                                    </span>
-                                    <br />
-                                    <span className="text-muted">
-                                        Created: {new Date(createdAt).toLocaleString()}
-                                    </span>
-                                </div>
-                            </Card.Body>
-                        </Card>
+                <div className="notes-grid">
+                    <LinkContainer to="/notes/new">
+                        <div className="note-card create-new-card">
+                            <BsPencilSquare size={30} />
+                            <h5>Create a new note</h5>
+                        </div>
                     </LinkContainer>
-                ))}
+                    {notes.map(({ noteId, content, createdAt, attachment, userId }) => {
+                            const safeContent = typeof content === "string" ? content : "No content available";
+                            const safeAttachment = typeof attachment === "string" ? attachment : null;
+    
+                            const filePath = `private/${userId}/${safeAttachment}`;
+                            const encodedKey = encodeURIComponent(filePath);
+                            const imageUrl = `${BASE_URL}/${encodedKey}`;
+                        return (
+                            <LinkContainer key={noteId} to={`/notes/${noteId}`}>
+                                <div className="note-card">
+                                {imageUrl && (
+                                        <img
+                                            src={imageUrl}
+                                            alt={`Note ${safeContent.trim().split("\n")[0]}`}
+                                            className="note-image"
+                                            onError={(e) => (e.target.src = "/default-image.png")}
+                                        />
+                                    )}
+                                     <div className="note-content">
+                                        <span className="font-weight-bold">
+                                            {safeContent.trim().split("\n")[0]}
+                                        </span>
+                                    </div>
+                                    <div className="note-actions">
+                                        <LinkContainer to={`/notes/${noteId}`}>
+                                            <Button variant="primary" size="sm" className="mr-2">
+                                                Show
+                                            </Button>
+                                        </LinkContainer>
+                                    </div>
+                                
+                                    <div className="card-body">
+                                        <h5 className="card-title">
+                                            {content.trim().split("\n")[0]}
+                                        </h5>
+                                        <p className="card-text">
+                                            Created: {new Date(createdAt).toLocaleString()}
+                                        </p>
+                                    </div>
+                                </div>
+                            </LinkContainer>
+                        );
+                    })}
+                </div>
             </>
         );
     }
+    
 
     function renderPagination() {
         const totalPages = Math.ceil(filteredNotes.length / NOTES_PER_PAGE);
@@ -130,7 +159,7 @@ export default function Home() {
                     </LinkContainer>
                     <LinkContainer to="/login">
                         <Button className="ml-4" variant="primary">Login</Button>
-                    </LinkContainer>
+                  9  </LinkContainer>
                 </div>
             </div>
         );
