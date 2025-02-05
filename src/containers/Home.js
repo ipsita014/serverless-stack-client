@@ -8,7 +8,6 @@ import { API } from "aws-amplify";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
-// import Card from "react-bootstrap/Card";
 import "./Home.css";
 
 const NOTES_PER_PAGE = 5;
@@ -28,7 +27,7 @@ export default function Home() {
         async function onLoad() {
             if (!isAuthenticated) {
                 return;
-            } 
+            }
             try {
                 const notes = await loadNotes();
                 const user = await Auth.currentAuthenticatedUser();
@@ -74,62 +73,57 @@ export default function Home() {
 
     function renderNotesList(notes) {
         return (
-            <>
-                <div className="notes-grid">
-                    <LinkContainer to="/notes/new">
-                        <div className="note-card create-new-card">
-                            <BsPencilSquare size={30} />
-                            <h5>Create a new note</h5>
-                        </div>
-                    </LinkContainer>
-                    {notes.map(({ noteId, content, createdAt, attachment, userId }) => {
-                            const safeContent = typeof content === "string" ? content : "No content available";
-                            const safeAttachment = typeof attachment === "string" ? attachment : null;
-    
-                            const filePath = `private/${userId}/${safeAttachment}`;
-                            const encodedKey = encodeURIComponent(filePath);
-                            const imageUrl = `${BASE_URL}/${encodedKey}`;
-                        return (
-                            <LinkContainer key={noteId} to={`/notes/${noteId}`}>
-                                <div className="note-card">
+            <div className="notes-grid">
+                <LinkContainer to="/notes/new">
+                    <div className="note-card create-new-card">
+                        <BsPencilSquare size={30} />
+                        <h5>Create a new note</h5>
+                    </div>
+                </LinkContainer>
+                {notes.map(({ noteId, content, createdAt, attachment, userId }) => {
+                    const safeContent = typeof content === "string" ? content : "No content available";
+                    const safeAttachment = typeof attachment === "string" ? attachment : null;
+
+                    const filePath = `private/${userId}/${safeAttachment}`;
+                    const encodedKey = encodeURIComponent(filePath);
+                    const imageUrl = `${BASE_URL}/${encodedKey}`;
+
+                    return (
+                        <LinkContainer key={noteId} to={`/notes/${noteId}`}>
+                            <div className="note-card">
                                 {imageUrl && (
-                                        <img
-                                            src={imageUrl}
-                                            alt={`Note ${safeContent.trim().split("\n")[0]}`}
-                                            className="note-image"
-                                            onError={(e) => (e.target.src = "/default-image.png")}
-                                        />
-                                    )}
-                                     <div className="note-content">
-                                        <span className="font-weight-bold">
-                                            {safeContent.trim().split("\n")[0]}
-                                        </span>
-                                    </div>
-                                    <div className="note-actions">
-                                        <LinkContainer to={`/notes/${noteId}`}>
-                                            <Button variant="primary" size="sm" className="mr-2">
-                                                Show
-                                            </Button>
-                                        </LinkContainer>
-                                    </div>
-                                
-                                    <div className="card-body">
-                                        <h5 className="card-title">
-                                            {content.trim().split("\n")[0]}
-                                        </h5>
-                                        <p className="card-text">
-                                            Created: {new Date(createdAt).toLocaleString()}
-                                        </p>
-                                    </div>
+                                    <img
+                                        src={imageUrl}
+                                        alt={`Note ${safeContent.trim().split("\n")[0]}`}
+                                        className="note-image"
+                                        onError={(e) => (e.target.src = "/default-image.png")}
+                                    />
+                                )}
+                                <div className="note-content">
+                                    <span className="font-weight-bold">
+                                        {safeContent.trim().split("\n")[0]}
+                                    </span>
                                 </div>
-                            </LinkContainer>
-                        );
-                    })}
-                </div>
-            </>
+                                <div className="note-actions">
+                                    <Button variant="primary" size="sm" className="mr-2">
+                                        Show
+                                    </Button>
+                                </div>
+                                <div className="card-body">
+                                    <h5 className="card-title">
+                                        {content.trim().split("\n")[0]}
+                                    </h5>
+                                    <p className="card-text">
+                                        Created: {new Date(createdAt).toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                        </LinkContainer>
+                    );
+                })}
+            </div>
         );
     }
-    
 
     function renderPagination() {
         const totalPages = Math.ceil(filteredNotes.length / NOTES_PER_PAGE);
@@ -159,27 +153,26 @@ export default function Home() {
                     </LinkContainer>
                     <LinkContainer to="/login">
                         <Button className="ml-4" variant="primary">Login</Button>
-                  9  </LinkContainer>
+                    </LinkContainer>
                 </div>
             </div>
         );
     }
 
     function renderNotes() {
-        return (
-            <div className="notes">
-                <h2>
-                    Welcome, <span>{greet}</span>
-                </h2>
-                <h2 className="pb-3 mt-4 mb-3 border-bottom">Your Notes</h2>
-                <Form className="mb-3">
-                    <Form.Control
-                        type="text"
-                        placeholder="Search notes..."
-                        value={searchTerm}
-                        onChange={handleSearch}
-                    />
-                </Form>
+  return (
+    <div className="notes">
+      <div className="greet-container">
+        <h2>Welcome, <span>{greet}</span></h2>
+      </div>
+      <Form className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Search notes..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </Form>
                 {!isLoading ? (
                     <>
                         <div className="note-cards-list">

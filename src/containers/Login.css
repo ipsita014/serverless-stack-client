@@ -1,17 +1,26 @@
 /* General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+
 body {
-    font-family: 'Ubuntu', Arial, sans-serif;
-    background-color: #f1f4f8;
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(-45deg, #6a11cb, #2575fc, #ff6a00, #ee0979);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-image: linear-gradient(135deg, #6c757d, #4a4e69);
-    background-size: cover;
 }
 
-/* Main Container for Login Form */
+/* Background Animation */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Login Container */
 .Login {
     width: 100%;
     display: flex;
@@ -20,79 +29,92 @@ body {
 }
 
 .login-container {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
     width: 100%;
     max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     animation: fadeIn 1s ease-in-out;
 }
 
+/* Form Heading */
 h2 {
-    font-size: 28px;
-    font-family: "Open Sans", sans-serif;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: 600;
+    font-size: 30px;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 15px;
 }
 
+/* Input Fields */
 .input-field {
-    border-radius: 30px;
+    width: 100%;
+    padding: 12px 15px;
     font-size: 16px;
-    padding: 10px 15px;
-    border: 2px solid #ddd;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
+    border-radius: 30px;
+    border: none;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .input-field:focus {
-    border-color: #6c757d;
-    outline: none;
-    box-shadow: 0 0 5px rgba(108, 117, 125, 0.7);
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
 }
 
-/* Forget Password Link */
+/* Forget Password */
 .forgetPassword {
-    text-align: right;
-    padding-bottom: 10px;
     font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
 }
 
 .forgetPassword:hover {
-    cursor: pointer;
-    color: #6c757d;
-    font-weight: 600;
+    color: #ffeb3b;
+    font-weight: bold;
 }
 
-/* Submit Button Styles */
+/* Submit Button */
 .submit-btn {
-    background-color: #6c757d;
-    border-radius: 30px;
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+    color: #fff;
+    border: none;
     padding: 12px;
-    font-size: 16px;
+    width: 100%;
+    border-radius: 30px;
+    font-size: 18px;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .submit-btn:hover {
-    background-color: #5a6268;
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px rgba(255, 81, 47, 0.3);
 }
 
-/* Animation for Form Appearance */
+/* Loading Button Animation */
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive Styles */
+/* Responsive Design */
 @media (max-width: 480px) {
     .login-container {
         padding: 20px;
@@ -102,12 +124,8 @@ h2 {
     h2 {
         font-size: 24px;
     }
-    
-    .input-field {
-        font-size: 14px;
-    }
 
     .submit-btn {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
